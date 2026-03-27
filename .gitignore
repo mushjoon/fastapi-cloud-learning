@@ -38,3 +38,8 @@ docker-compose.override.yml
 # Database
 *.db
 *.sqlite3
+
+# Pytest coverage files
+.coverage
+htmlcov/
+.pytest_cache/
