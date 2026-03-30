@@ -1,0 +1,38 @@
+name: CI Pipeline - Automated Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Tests & Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run pytest with coverage
+      run: |
+        pytest test_main.py -v --cov=main --cov-report=term-missing
+    
+    - name: Test Summary
+      if: always()
+      run: |
+        echo "✅ Automated testing complete!"
+        echo "📊 Coverage report generated above"
+        echo "🚀 Ready for manual deployment if tests pass"
+
